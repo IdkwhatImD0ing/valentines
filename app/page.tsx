@@ -20,8 +20,6 @@ export default function Home() {
   const [noButtonTextIndex, setNoButtonTextIndex] = useState(0)
   const [showConfetti, setShowConfetti] = useState(false)
 
-  console.log('[v0] Component rendering, background color should be:', '#D9E6F2')
-
   const handleNoHover = () => {
     // Generate random position within viewport bounds
     const maxX = window.innerWidth - 200 // Button width buffer
@@ -106,7 +104,7 @@ export default function Home() {
                 Yay!
               </h2>
               <p className="font-sans text-card-foreground/70">
-                {'I knew you\'d say yes ❤️'}
+                I knew you&apos;d say yes ❤️
               </p>
             </div>
           </div>
