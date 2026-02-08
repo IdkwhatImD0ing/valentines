@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Heart } from 'lucide-react'
 
 const NO_BUTTON_TEXTS = [
@@ -15,6 +16,7 @@ const NO_BUTTON_TEXTS = [
 ]
 
 export default function Home() {
+  const router = useRouter()
   const [noButtonPosition, setNoButtonPosition] = useState({ x: 0, y: 0 })
   const [noButtonScale, setNoButtonScale] = useState(1)
   const [noButtonTextIndex, setNoButtonTextIndex] = useState(0)
@@ -47,6 +49,9 @@ export default function Home() {
 
   const handleYesClick = () => {
     setShowConfetti(true)
+    setTimeout(() => {
+      router.push('/letter')
+    }, 1500)
   }
 
   return (
