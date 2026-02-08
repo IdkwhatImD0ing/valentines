@@ -191,29 +191,21 @@ export default function LetterPage() {
       </div>
 
       {/* Keyframes */}
-      <style jsx>{`
-        @keyframes floatUp {
-          0% {
-            opacity: 0;
-            transform: translateY(0);
-          }
-          20% {
-            opacity: 1;
-          }
-          100% {
-            opacity: 0;
-            transform: translateY(-250px);
-          }
-        }
-        @keyframes sway {
-          0%, 100% {
-            margin-left: 0;
-          }
-          50% {
-            margin-left: 30px;
-          }
-        }
-      `}</style>
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            @keyframes floatUp {
+              0% { opacity: 0; transform: translateY(0); }
+              20% { opacity: 1; }
+              100% { opacity: 0; transform: translateY(-250px); }
+            }
+            @keyframes sway {
+              0%, 100% { margin-left: 0; }
+              50% { margin-left: 30px; }
+            }
+          `,
+        }}
+      />
     </div>
   )
 }

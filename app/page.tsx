@@ -40,7 +40,6 @@ export default function Home() {
   }, [])
 
   const handleYesClick = useCallback(() => {
-    console.log("[v0] Yes button clicked, navigating to /letter")
     router.push("/letter")
   }, [router])
 
