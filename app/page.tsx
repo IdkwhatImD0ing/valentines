@@ -40,8 +40,9 @@ export default function Home() {
   }, [])
 
   const handleYesClick = useCallback(() => {
-    router.push("/letter")
-  }, [router])
+    console.log("[v0] Yes clicked - navigating now")
+    window.location.href = "/letter"
+  }, [])
 
   return (
     <main className="min-h-screen bg-background flex items-center justify-center p-4 overflow-hidden relative">
