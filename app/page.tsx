@@ -20,6 +20,8 @@ export default function Home() {
   const [noButtonTextIndex, setNoButtonTextIndex] = useState(0)
   const [showConfetti, setShowConfetti] = useState(false)
 
+  console.log('[v0] Component rendering, background color should be:', '#D9E6F2')
+
   const handleNoHover = () => {
     // Generate random position within viewport bounds
     const maxX = window.innerWidth - 200 // Button width buffer
