@@ -51,54 +51,54 @@
   --radius: 0.5rem;
   
   /* Baby blue-gray background #D9E6F2 */
-  --background: 217 78% 92%;
+  --background: #D9E6F2;
   
   /* Soft charcoal text #2F3A44 */
-  --foreground: 210 19% 23%;
+  --foreground: #2F3A44;
   
   /* Warm ivory letter card #FFF8F0 */
-  --card: 36 100% 97%;
-  --card-foreground: 210 19% 23%;
+  --card: #FFF8F0;
+  --card-foreground: #2F3A44;
   
   /* Muted blush accent #E7AEB4 */
-  --primary: 351 51% 80%;
-  --primary-foreground: 210 19% 23%;
+  --primary: #E7AEB4;
+  --primary-foreground: #2F3A44;
   
   /* Dusty lavender secondary #D6CCE8 */
-  --secondary: 264 40% 84%;
-  --secondary-foreground: 210 19% 23%;
+  --secondary: #D6CCE8;
+  --secondary-foreground: #2F3A44;
   
-  --muted: 210 20% 94%;
-  --muted-foreground: 210 12% 50%;
+  --muted: #F5F5F5;
+  --muted-foreground: #6B7280;
   
-  --accent: 351 51% 80%;
-  --accent-foreground: 210 19% 23%;
+  --accent: #E7AEB4;
+  --accent-foreground: #2F3A44;
   
-  --destructive: 0 84% 60%;
+  --destructive: #EF4444;
   
-  --border: 210 20% 90%;
-  --input: 210 20% 90%;
-  --ring: 351 51% 80%;
+  --border: #E5E7EB;
+  --input: #E5E7EB;
+  --ring: #E7AEB4;
   
-  --popover: 36 100% 97%;
-  --popover-foreground: 210 19% 23%;
+  --popover: #FFF8F0;
+  --popover-foreground: #2F3A44;
   
   /* Chart colors using theme palette */
-  --chart-1: 351 51% 80%;
-  --chart-2: 264 40% 84%;
-  --chart-3: 217 78% 92%;
-  --chart-4: 210 19% 23%;
-  --chart-5: 210 20% 94%;
+  --chart-1: #E7AEB4;
+  --chart-2: #D6CCE8;
+  --chart-3: #D9E6F2;
+  --chart-4: #2F3A44;
+  --chart-5: #F5F5F5;
   
   /* Sidebar colors */
-  --sidebar: 36 100% 97%;
-  --sidebar-foreground: 210 19% 23%;
-  --sidebar-primary: 351 51% 80%;
-  --sidebar-primary-foreground: 210 19% 23%;
-  --sidebar-accent: 264 40% 84%;
-  --sidebar-accent-foreground: 210 19% 23%;
-  --sidebar-border: 210 20% 90%;
-  --sidebar-ring: 351 51% 80%;
+  --sidebar: #FFF8F0;
+  --sidebar-foreground: #2F3A44;
+  --sidebar-primary: #E7AEB4;
+  --sidebar-primary-foreground: #2F3A44;
+  --sidebar-accent: #D6CCE8;
+  --sidebar-accent-foreground: #2F3A44;
+  --sidebar-border: #E5E7EB;
+  --sidebar-ring: #E7AEB4;
 }
 
 
