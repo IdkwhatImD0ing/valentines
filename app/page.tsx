@@ -48,10 +48,7 @@ export default function Home() {
   }
 
   const handleYesClick = () => {
-    setShowConfetti(true)
-    setTimeout(() => {
-      router.push('/letter')
-    }, 1500)
+    router.push('/letter')
   }
 
   return (
