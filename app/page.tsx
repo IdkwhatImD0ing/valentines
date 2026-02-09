@@ -17,27 +17,28 @@ const NO_BUTTON_TEXTS = [
 
 export default function Home() {
   const router = useRouter()
+  const [noButtonMoved, setNoButtonMoved] = useState(false)
   const [noButtonPosition, setNoButtonPosition] = useState({ x: 0, y: 0 })
   const [noButtonScale, setNoButtonScale] = useState(1)
   const [noButtonTextIndex, setNoButtonTextIndex] = useState(0)
 
-  const handleNoHover = useCallback(() => {
-    const maxX = window.innerWidth - 200
-    const maxY = window.innerHeight - 100
-    const newX = Math.random() * maxX - maxX / 2
-    const newY = Math.random() * maxY - maxY / 2
+  const moveNoButton = useCallback(() => {
+    const padding = 80
+    const newX = padding + Math.random() * (window.innerWidth - padding * 2)
+    const newY = padding + Math.random() * (window.innerHeight - padding * 2)
     setNoButtonPosition({ x: newX, y: newY })
+    setNoButtonMoved(true)
   }, [])
 
+  const handleNoHover = useCallback(() => {
+    moveNoButton()
+  }, [moveNoButton])
+
   const handleNoClick = useCallback(() => {
-    const maxX = window.innerWidth - 200
-    const maxY = window.innerHeight - 100
-    const newX = Math.random() * maxX - maxX / 2
-    const newY = Math.random() * maxY - maxY / 2
-    setNoButtonPosition({ x: newX, y: newY })
+    moveNoButton()
     setNoButtonScale((prev) => Math.max(prev - 0.15, 0.3))
     setNoButtonTextIndex((prev) => Math.min(prev + 1, NO_BUTTON_TEXTS.length - 1))
-  }, [])
+  }, [moveNoButton])
 
   const handleYesClick = useCallback(() => {
     window.location.href = "/letter"
@@ -63,13 +64,17 @@ export default function Home() {
             type="button"
             onMouseEnter={handleNoHover}
             onClick={handleNoClick}
-            className="px-12 py-4 bg-secondary text-secondary-foreground font-sans font-semibold text-lg rounded-lg hover:scale-105 hover:shadow-lg active:scale-95 transition-all duration-200 cursor-pointer fixed z-10"
-            style={{
-              left: `calc(50% - 80px + ${noButtonPosition.x}px)`,
-              top: `calc(60% + ${noButtonPosition.y}px)`,
-              transform: `translate(-50%, -50%) scale(${noButtonScale})`,
-              transition: "left 0.3s ease-out, top 0.3s ease-out, transform 0.3s ease-out",
-            }}
+            className={`px-12 py-4 bg-secondary text-secondary-foreground font-sans font-semibold text-lg rounded-lg hover:scale-105 hover:shadow-lg active:scale-95 duration-200 cursor-pointer ${noButtonMoved ? "fixed z-10" : "relative z-10"}`}
+            style={
+              noButtonMoved
+                ? {
+                    left: `${noButtonPosition.x}px`,
+                    top: `${noButtonPosition.y}px`,
+                    transform: `scale(${noButtonScale})`,
+                    transition: "left 0.3s ease-out, top 0.3s ease-out, transform 0.3s ease-out",
+                  }
+                : undefined
+            }
           >
             {NO_BUTTON_TEXTS[noButtonTextIndex]}
           </button>
