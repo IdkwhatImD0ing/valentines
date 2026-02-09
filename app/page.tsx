@@ -58,28 +58,28 @@ export default function Home() {
           I promise to make it worth your while
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center min-h-[120px]">
-          <button
-            type="button"
-            onClick={handleYesClick}
-            className="px-12 py-4 bg-primary text-primary-foreground font-sans font-semibold text-lg rounded-lg hover:scale-105 hover:shadow-lg active:scale-95 transition-all duration-200 cursor-pointer relative z-30"
-          >
-            Yes
-          </button>
-
+        <div className="flex flex-row gap-6 justify-center items-center">
           <button
             type="button"
             onMouseEnter={handleNoHover}
             onClick={handleNoClick}
             className="px-12 py-4 bg-secondary text-secondary-foreground font-sans font-semibold text-lg rounded-lg hover:scale-105 hover:shadow-lg active:scale-95 transition-all duration-200 cursor-pointer fixed z-10"
             style={{
-              left: `calc(50% + ${noButtonPosition.x}px)`,
+              left: `calc(50% - 80px + ${noButtonPosition.x}px)`,
               top: `calc(60% + ${noButtonPosition.y}px)`,
               transform: `translate(-50%, -50%) scale(${noButtonScale})`,
               transition: "left 0.3s ease-out, top 0.3s ease-out, transform 0.3s ease-out",
             }}
           >
             {NO_BUTTON_TEXTS[noButtonTextIndex]}
+          </button>
+
+          <button
+            type="button"
+            onClick={handleYesClick}
+            className="px-12 py-4 bg-primary text-primary-foreground font-sans font-semibold text-lg rounded-lg hover:scale-105 hover:shadow-lg active:scale-95 transition-all duration-200 cursor-pointer relative z-30"
+          >
+            Yes
           </button>
         </div>
       </div>
