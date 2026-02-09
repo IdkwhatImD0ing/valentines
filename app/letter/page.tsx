@@ -165,6 +165,7 @@ export default function LetterPage() {
           opacity: phase === "letter" ? 1 : 0,
           transform: phase === "letter" ? "translateY(0)" : "translateY(60px)",
           pointerEvents: phase === "letter" ? "auto" : "none",
+          zIndex: 60,
         }}
       >
         <div className="bg-card rounded-lg shadow-2xl p-8 md:p-12 mx-4 relative overflow-hidden">
