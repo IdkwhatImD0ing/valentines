@@ -44,7 +44,7 @@ export default function LetterPage() {
     // Auto-start the envelope opening sequence
     const t1 = setTimeout(() => setPhase("opening"), 600)
     const t2 = setTimeout(() => setPhase("open"), 1200)
-    const t3 = setTimeout(() => setPhase("letter"), 2000)
+    const t3 = setTimeout(() => setPhase("letter"), 3500)
     return () => {
       clearTimeout(t1)
       clearTimeout(t2)
@@ -98,19 +98,6 @@ export default function LetterPage() {
             <div className="absolute left-[15%] right-[15%] top-[60%] h-[6%] bg-[#E5E7EB] rounded-sm" />
           </div>
 
-          {/* Floating hearts */}
-          {(phase === "open" || phase === "letter") && (
-            <div className="absolute inset-0" style={{ zIndex: 3 }}>
-              <FloatingHeart delay={0.2} left={20} size={24} />
-              <FloatingHeart delay={0.5} left={45} size={32} />
-              <FloatingHeart delay={0.3} left={70} size={20} />
-              <FloatingHeart delay={0.8} left={35} size={28} />
-              <FloatingHeart delay={0.6} left={60} size={22} />
-              <FloatingHeart delay={1.0} left={25} size={18} />
-              <FloatingHeart delay={0.4} left={55} size={26} />
-            </div>
-          )}
-
           {/* Envelope front face */}
           <div
             className="absolute rounded-b-md"
@@ -145,6 +132,31 @@ export default function LetterPage() {
           />
         </div>
       </div>
+
+      {/* Floating hearts - rendered outside envelope so they stay visible */}
+      {(phase === "open" || phase === "letter") && (
+        <div
+          className="fixed pointer-events-none"
+          style={{
+            left: "50%",
+            top: "50%",
+            width: 280,
+            height: 180,
+            transform: "translate(-50%, -50%)",
+            zIndex: 50,
+          }}
+        >
+          <FloatingHeart delay={0.1} left={15} size={24} />
+          <FloatingHeart delay={0.3} left={40} size={32} />
+          <FloatingHeart delay={0.2} left={65} size={20} />
+          <FloatingHeart delay={0.6} left={30} size={28} />
+          <FloatingHeart delay={0.5} left={55} size={22} />
+          <FloatingHeart delay={0.8} left={20} size={18} />
+          <FloatingHeart delay={0.4} left={75} size={26} />
+          <FloatingHeart delay={0.7} left={50} size={30} />
+          <FloatingHeart delay={0.9} left={10} size={20} />
+        </div>
+      )}
 
       {/* Letter content that fades in */}
       <div
