@@ -1,31 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-
-const LETTER_TEXT = `Hey Emily,
-
-I originally wanted to write this in Chinese.
-Then I realized... my skill was not up to par. So for everyone's sake, we're sticking to English.
-But if effort counts, just know I did consider it. :)
-
-I've been thinking about how a bunch of small, random moments turned into something that feels important to me.
-
-Like the Renaissance Fair.
-Our first full day date. Watching you try on all the little accessories, completely in your own world. I remember just standing there, feeling strangely content, thinking you looked really happy. And really, really cute.
-
-Then Yosemite.
-A 9-hour hike that I was fully convinced I couldn't finish. Somewhere along the way my legs felt done, and I remember wondering if I'd overestimated myself. But we kept going anyway, just staying with it, step after step, and somehow we made it to the end. I don't think I would've finished that hike the same way without you there.
-
-And that night, lying under the stars, talking about random things while looking at the stars. It didn't feel that long, but when we finally checked the time, two hours had somehow passed without either of us noticing. It didn't feel that long. It just felt easy. Quiet. Peaceful in a way that's hard to put into words.
-
-And it's not just the big adventures.
-It's cooking together for the first time and acting like we were professionals.
-It's sitting on the couch watching our c drama and enjoying the action scenes.
-It's the small, ordinary moments that don't feel ordinary when they're with you.
-
-We're different in a lot of ways, and I don't pretend to know exactly what the future looks like. I just know that what we have feels real to me, and being with you makes me happy in a way that's steady and easy.
-
-That's enough for me.`
+import { VoiceoverLetterContent } from "@/components/voiceover-player"
 
 function FloatingHeart({ delay, left, size }: { delay: number; left: number; size: number }) {
   return (
@@ -171,7 +147,7 @@ export default function LetterPage() {
         </div>
       )}
 
-      {/* Letter content that fades in */}
+      {/* Letter content with voiceover that fades in */}
       <div
         className="fixed inset-0 overflow-y-auto transition-all duration-1000 ease-in-out"
         style={{
@@ -182,41 +158,7 @@ export default function LetterPage() {
         }}
       >
         <div className="min-h-full flex items-start justify-center py-8 px-4">
-          <div className="w-full max-w-2xl">
-            <div className="bg-card rounded-lg shadow-2xl p-8 md:p-12 relative overflow-hidden">
-              {/* Paper texture overlay */}
-              <div
-                className="absolute inset-0 opacity-[0.03] pointer-events-none"
-                style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E")`,
-                }}
-              />
-
-              <div className="relative font-serif text-lg md:text-xl leading-relaxed text-card-foreground space-y-6">
-                {LETTER_TEXT.split("\n\n").map((paragraph, i) => (
-                  <p key={i} className={`text-balance ${i === 0 ? "text-2xl md:text-3xl font-medium" : ""}`}>
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-
-              <div className="mt-10 flex justify-center">
-                <svg
-                  width={40}
-                  height={40}
-                  viewBox="0 0 24 24"
-                  fill="#E7AEB4"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                </svg>
-              </div>
-            </div>
-
-            <p className="mt-6 pb-8 text-center text-sm font-sans text-foreground/40">
-              Yours, always
-            </p>
-          </div>
+          <VoiceoverLetterContent />
         </div>
       </div>
 
