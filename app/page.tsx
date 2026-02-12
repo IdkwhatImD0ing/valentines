@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback, useRef } from "react"
+import { useState, useCallback, useRef, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Heart } from "lucide-react"
 
@@ -15,14 +15,39 @@ const NO_BUTTON_TEXTS = [
   "Please?",
 ]
 
+interface FloatingHeart {
+  id: number
+  left: number
+  top: number
+  size: number
+  delay: number
+  duration: number
+}
+
+function generateHearts(count: number): FloatingHeart[] {
+  return Array.from({ length: count }, (_, i) => ({
+    id: i,
+    left: Math.random() * 100,
+    top: Math.random() * 100,
+    size: 12 + Math.random() * 18,
+    delay: Math.random() * 8,
+    duration: 3 + Math.random() * 4,
+  }))
+}
+
 export default function Home() {
   const router = useRouter()
   const [noButtonMoved, setNoButtonMoved] = useState(false)
   const [noButtonOffset, setNoButtonOffset] = useState({ x: 0, y: 0 })
   const [noButtonScale, setNoButtonScale] = useState(1)
   const [noButtonTextIndex, setNoButtonTextIndex] = useState(0)
+  const [hearts, setHearts] = useState<FloatingHeart[]>([])
 
   const noButtonRef = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    setHearts(generateHearts(20))
+  }, [])
   const originalRect = useRef<{ left: number; top: number } | null>(null)
 
   const moveNoButton = useCallback(() => {
@@ -104,21 +129,23 @@ export default function Home() {
       </div>
 
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {Array.from({ length: 12 }).map((_, i) => (
+        {hearts.map((heart) => (
           <div
-            key={i}
+            key={heart.id}
             className="absolute"
             style={{
-              left: `${(i * 8.3) % 100}%`,
-              top: `${(i * 7.7 + 10) % 100}%`,
-              animation: `heartFloat ${12 + i * 2}s ${i * 0.8}s linear infinite`,
+              left: `${heart.left}%`,
+              top: `${heart.top}%`,
+              animation: `heartFade ${heart.duration}s ${heart.delay}s ease-in-out infinite`,
+              opacity: 0,
             }}
           >
             <Heart
-              className="text-primary/15 fill-primary/15"
+              className="text-primary fill-primary"
               style={{
-                width: 20 + (i % 4) * 8,
-                height: 20 + (i % 4) * 8,
+                width: heart.size,
+                height: heart.size,
+                opacity: 0.5,
               }}
             />
           </div>
@@ -128,20 +155,14 @@ export default function Home() {
       <style
         dangerouslySetInnerHTML={{
           __html: `
-            @keyframes heartFloat {
-              0% {
-                transform: translateY(0) rotate(0deg);
+            @keyframes heartFade {
+              0%, 100% {
                 opacity: 0;
+                transform: scale(0.8) rotate(-5deg);
               }
-              10% {
-                opacity: 0.3;
-              }
-              90% {
-                opacity: 0.3;
-              }
-              100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
+              50% {
+                opacity: 1;
+                transform: scale(1) rotate(5deg);
               }
             }
           `,
