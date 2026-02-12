@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Dancing_Script, Cormorant_Garamond, Inter } from "next/font/google";
+import "./globals.css";
 
 const dancingScript = Dancing_Script({
   variable: "--font-cursive",
