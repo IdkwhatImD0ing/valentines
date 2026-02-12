@@ -212,7 +212,7 @@ export default function LetterPage() {
         </div>
 
         <p className="mt-6 text-center text-sm font-sans text-foreground/40">
-          With all my heart
+          Yours, always
         </p>
       </div>
 
