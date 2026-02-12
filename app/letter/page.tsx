@@ -2,17 +2,30 @@
 
 import { useState, useEffect } from "react"
 
-const LETTER_TEXT = `My Dearest,
+const LETTER_TEXT = `Hey Emily,
 
-As I sit here with pen in hand, I find myself struggling to capture in words what my heart has known for so long. Yet, I must try.
+I originally wanted to write this in Chinese.
+Then I realized... my skill was not up to par. So for everyone's sake, we're sticking to English.
+But if effort counts, just know I did consider it. :)
 
-There is something magical about the way you move through the world \u2014 a quiet grace that turns ordinary moments into memories I treasure. The way morning light catches in your eyes, how your laughter fills a room with warmth, the gentle way you listen when I speak.
+I've been thinking about how a bunch of small, random moments turned into something that feels important to me.
 
-Time with you feels different \u2014 slower, deeper, more real. As if the universe pauses to let me notice every detail, every fleeting expression, every breath we share.
+Like the Renaissance Fair.
+Our first full day date. Watching you try on all the little accessories, completely in your own world. I remember just standing there, feeling strangely content, thinking you looked really happy. And really, really cute.
 
-I wanted you to know that you are seen, you are cherished, and you are loved in ways that words will always struggle to express.
+Then Yosemite.
+A 9-hour hike that I was fully convinced I couldn't finish. Somewhere along the way my legs felt done, and I remember wondering if I'd overestimated myself. But we kept going anyway, just staying with it, step after step, and somehow we made it to the end. I don't think I would've finished that hike the same way without you there.
 
-Forever yours`
+And that night, lying under the stars, talking about random things while looking at the stars. It didn't feel that long, but when we finally checked the time, two hours had somehow passed without either of us noticing. It didn't feel that long. It just felt easy. Quiet. Peaceful in a way that's hard to put into words.
+
+And it's not just the big adventures.
+It's cooking together for the first time and acting like we were professionals.
+It's sitting on the couch watching our c drama and enjoying the action scenes.
+It's the small, ordinary moments that don't feel ordinary when they're with you.
+
+We're different in a lot of ways, and I don't pretend to know exactly what the future looks like. I just know that what we have feels real to me, and being with you makes me happy in a way that's steady and easy.
+
+That's enough for me.`
 
 function FloatingHeart({ delay, left, size }: { delay: number; left: number; size: number }) {
   return (
