@@ -158,7 +158,7 @@ export default function LetterPage() {
         }}
       >
         <div className="min-h-full flex items-start justify-center py-8 px-4">
-          <VoiceoverLetterContent />
+          <VoiceoverLetterContent phase={phase} />
         </div>
       </div>
 

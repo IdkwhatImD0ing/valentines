@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { Heart } from "lucide-react"
 
@@ -18,15 +18,30 @@ const NO_BUTTON_TEXTS = [
 export default function Home() {
   const router = useRouter()
   const [noButtonMoved, setNoButtonMoved] = useState(false)
-  const [noButtonPosition, setNoButtonPosition] = useState({ x: 0, y: 0 })
+  const [noButtonOffset, setNoButtonOffset] = useState({ x: 0, y: 0 })
   const [noButtonScale, setNoButtonScale] = useState(1)
   const [noButtonTextIndex, setNoButtonTextIndex] = useState(0)
 
+  const noButtonRef = useRef<HTMLButtonElement>(null)
+  const originalRect = useRef<{ left: number; top: number } | null>(null)
+
   const moveNoButton = useCallback(() => {
+    if (!noButtonRef.current) return
+
+    // Capture the button's original layout position on first move
+    if (!originalRect.current) {
+      const rect = noButtonRef.current.getBoundingClientRect()
+      originalRect.current = { left: rect.left, top: rect.top }
+    }
+
     const padding = 80
-    const newX = padding + Math.random() * (window.innerWidth - padding * 2)
-    const newY = padding + Math.random() * (window.innerHeight - padding * 2)
-    setNoButtonPosition({ x: newX, y: newY })
+    const targetX = padding + Math.random() * (window.innerWidth - padding * 2)
+    const targetY = padding + Math.random() * (window.innerHeight - padding * 2)
+
+    setNoButtonOffset({
+      x: targetX - originalRect.current.left,
+      y: targetY - originalRect.current.top,
+    })
     setNoButtonMoved(true)
   }, [])
 
@@ -61,20 +76,19 @@ export default function Home() {
 
         <div className="flex flex-row gap-6 justify-center items-center">
           <button
+            ref={noButtonRef}
             type="button"
             onMouseEnter={handleNoHover}
             onClick={handleNoClick}
-            className={`px-12 py-4 bg-secondary text-secondary-foreground font-sans font-semibold text-lg rounded-lg hover:scale-105 hover:shadow-lg active:scale-95 duration-200 cursor-pointer ${noButtonMoved ? "fixed z-10" : "relative z-10"}`}
-            style={
-              noButtonMoved
-                ? {
-                    left: `${noButtonPosition.x}px`,
-                    top: `${noButtonPosition.y}px`,
-                    transform: `scale(${noButtonScale})`,
-                    transition: "left 0.3s ease-out, top 0.3s ease-out, transform 0.3s ease-out",
-                  }
-                : undefined
-            }
+            className="px-12 py-4 bg-secondary text-secondary-foreground font-sans font-semibold text-lg rounded-lg hover:shadow-lg active:scale-95 duration-200 cursor-pointer relative z-10"
+            style={{
+              transform: noButtonMoved
+                ? `translate(${noButtonOffset.x}px, ${noButtonOffset.y}px) scale(${noButtonScale})`
+                : undefined,
+              transition: noButtonMoved
+                ? "transform 0.3s ease-out"
+                : undefined,
+            }}
           >
             {NO_BUTTON_TEXTS[noButtonTextIndex]}
           </button>
