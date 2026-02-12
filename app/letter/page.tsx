@@ -173,7 +173,7 @@ export default function LetterPage() {
 
       {/* Letter content that fades in */}
       <div
-        className="w-full max-w-2xl transition-all duration-1000 ease-in-out absolute"
+        className="fixed inset-0 overflow-y-auto transition-all duration-1000 ease-in-out"
         style={{
           opacity: phase === "letter" ? 1 : 0,
           transform: phase === "letter" ? "translateY(0)" : "translateY(60px)",
@@ -181,39 +181,43 @@ export default function LetterPage() {
           zIndex: 60,
         }}
       >
-        <div className="bg-card rounded-lg shadow-2xl p-8 md:p-12 mx-4 relative overflow-hidden">
-          {/* Paper texture overlay */}
-          <div
-            className="absolute inset-0 opacity-[0.03] pointer-events-none"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E")`,
-            }}
-          />
+        <div className="min-h-full flex items-start justify-center py-8 px-4">
+          <div className="w-full max-w-2xl">
+            <div className="bg-card rounded-lg shadow-2xl p-8 md:p-12 relative overflow-hidden">
+              {/* Paper texture overlay */}
+              <div
+                className="absolute inset-0 opacity-[0.03] pointer-events-none"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E")`,
+                }}
+              />
 
-          <div className="relative font-serif text-lg md:text-xl leading-relaxed text-card-foreground space-y-6">
-            {LETTER_TEXT.split("\n\n").map((paragraph, i) => (
-              <p key={i} className={`text-balance ${i === 0 ? "text-2xl md:text-3xl font-medium" : ""}`}>
-                {paragraph}
-              </p>
-            ))}
-          </div>
+              <div className="relative font-serif text-lg md:text-xl leading-relaxed text-card-foreground space-y-6">
+                {LETTER_TEXT.split("\n\n").map((paragraph, i) => (
+                  <p key={i} className={`text-balance ${i === 0 ? "text-2xl md:text-3xl font-medium" : ""}`}>
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
 
-          <div className="mt-10 flex justify-center">
-            <svg
-              width={40}
-              height={40}
-              viewBox="0 0 24 24"
-              fill="#E7AEB4"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-            </svg>
+              <div className="mt-10 flex justify-center">
+                <svg
+                  width={40}
+                  height={40}
+                  viewBox="0 0 24 24"
+                  fill="#E7AEB4"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                </svg>
+              </div>
+            </div>
+
+            <p className="mt-6 pb-8 text-center text-sm font-sans text-foreground/40">
+              Yours, always
+            </p>
           </div>
         </div>
-
-        <p className="mt-6 text-center text-sm font-sans text-foreground/40">
-          Yours, always
-        </p>
       </div>
 
       {/* Keyframes */}
