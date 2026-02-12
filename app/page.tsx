@@ -1,65 +1,152 @@
-import Image from "next/image";
+"use client"
+
+import { useState, useCallback, useRef } from "react"
+import { useRouter } from "next/navigation"
+import { Heart } from "lucide-react"
+
+const NO_BUTTON_TEXTS = [
+  "No",
+  "Are you sure?",
+  "Really?",
+  "Think again!",
+  "Last chance!",
+  "Surely not?",
+  "You might regret this!",
+  "Please?",
+]
 
 export default function Home() {
+  const router = useRouter()
+  const [noButtonMoved, setNoButtonMoved] = useState(false)
+  const [noButtonOffset, setNoButtonOffset] = useState({ x: 0, y: 0 })
+  const [noButtonScale, setNoButtonScale] = useState(1)
+  const [noButtonTextIndex, setNoButtonTextIndex] = useState(0)
+
+  const noButtonRef = useRef<HTMLButtonElement>(null)
+  const originalRect = useRef<{ left: number; top: number } | null>(null)
+
+  const moveNoButton = useCallback(() => {
+    if (!noButtonRef.current) return
+
+    // Capture the button's original layout position on first move
+    if (!originalRect.current) {
+      const rect = noButtonRef.current.getBoundingClientRect()
+      originalRect.current = { left: rect.left, top: rect.top }
+    }
+
+    const padding = 80
+    const targetX = padding + Math.random() * (window.innerWidth - padding * 2)
+    const targetY = padding + Math.random() * (window.innerHeight - padding * 2)
+
+    setNoButtonOffset({
+      x: targetX - originalRect.current.left,
+      y: targetY - originalRect.current.top,
+    })
+    setNoButtonMoved(true)
+  }, [])
+
+  const handleNoHover = useCallback(() => {
+    moveNoButton()
+  }, [moveNoButton])
+
+  const handleNoClick = useCallback(() => {
+    moveNoButton()
+    setNoButtonScale((prev) => Math.max(prev - 0.15, 0.3))
+    setNoButtonTextIndex((prev) => Math.min(prev + 1, NO_BUTTON_TEXTS.length - 1))
+  }, [moveNoButton])
+
+  const handleYesClick = useCallback(() => {
+    window.location.href = "/letter"
+  }, [])
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="min-h-screen bg-background flex items-center justify-center p-4 overflow-hidden relative">
+      <div className="text-center relative z-10">
+        <div className="flex justify-center mb-8 animate-pulse">
+          <Heart className="w-20 h-20 text-primary fill-primary" />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        <h1 className="font-serif text-4xl md:text-6xl text-foreground mb-4 text-balance">
+          Will you be my Valentine?
+        </h1>
+
+        <p className="font-sans text-lg text-foreground/70 mb-12">
+          I promise to make it worth your while
+        </p>
+
+        <div className="flex flex-row gap-6 justify-center items-center">
+          <button
+            ref={noButtonRef}
+            type="button"
+            onMouseEnter={handleNoHover}
+            onClick={handleNoClick}
+            className="px-12 py-4 bg-secondary text-secondary-foreground font-sans font-semibold text-lg rounded-lg hover:shadow-lg active:scale-95 duration-200 cursor-pointer relative z-10"
+            style={{
+              transform: noButtonMoved
+                ? `translate(${noButtonOffset.x}px, ${noButtonOffset.y}px) scale(${noButtonScale})`
+                : undefined,
+              transition: noButtonMoved
+                ? "transform 0.3s ease-out"
+                : undefined,
+            }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+            {NO_BUTTON_TEXTS[noButtonTextIndex]}
+          </button>
+
+          <button
+            type="button"
+            onClick={handleYesClick}
+            className="px-12 py-4 bg-primary text-primary-foreground font-sans font-semibold text-lg rounded-lg hover:scale-105 hover:shadow-lg active:scale-95 transition-all duration-200 cursor-pointer relative z-30"
+          >
+            Yes
+          </button>
+        </div>
+      </div>
+
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {Array.from({ length: 12 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute"
+            style={{
+              left: `${(i * 8.3) % 100}%`,
+              top: `${(i * 7.7 + 10) % 100}%`,
+              animation: `heartFloat ${12 + i * 2}s ${i * 0.8}s linear infinite`,
+            }}
+          >
+            <Heart
+              className="text-primary/15 fill-primary/15"
+              style={{
+                width: 20 + (i % 4) * 8,
+                height: 20 + (i % 4) * 8,
+              }}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+          </div>
+        ))}
+      </div>
+
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            @keyframes heartFloat {
+              0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+              }
+              10% {
+                opacity: 0.3;
+              }
+              90% {
+                opacity: 0.3;
+              }
+              100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+              }
+            }
+          `,
+        }}
+      />
+    </main>
+  )
 }
