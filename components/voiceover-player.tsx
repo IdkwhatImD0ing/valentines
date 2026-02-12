@@ -118,11 +118,11 @@ export function VoiceoverLetterContent() {
             }}
           />
 
-          <div className="relative font-serif text-lg md:text-xl leading-relaxed space-y-6">
+          <div className="relative text-xl md:text-2xl leading-relaxed space-y-6" style={{ fontFamily: "var(--font-cursive)" }}>
             {transcript.map((paragraph, pIndex) => (
               <p
                 key={pIndex}
-                className={`text-balance ${pIndex === 0 ? "text-2xl md:text-3xl font-medium" : ""}`}
+                className={`text-balance ${pIndex === 0 ? "text-3xl md:text-4xl font-semibold" : ""}`}
               >
                 {paragraph.words.map((wordObj, wIndex) => {
                   const spoken = isWordSpoken(transcript, pIndex, wIndex, currentTime)
@@ -134,15 +134,26 @@ export function VoiceoverLetterContent() {
                   return (
                     <span
                       key={wIndex}
-                      className={`transition-colors duration-200 ${
-                        isActive
-                          ? "text-primary font-semibold"
-                          : spoken
-                            ? "text-card-foreground"
-                            : "text-card-foreground/30"
-                      }`}
+                      className="relative inline-block"
                     >
-                      {wordObj.word}
+                      {/* Ghost text for layout - always present but invisible */}
+                      <span className="text-card-foreground/20">
+                        {wordObj.word}
+                      </span>
+                      {/* Revealed text with writing animation */}
+                      {spoken && (
+                        <span
+                          className={`absolute inset-0 ${
+                            isActive ? "text-[#C0616E]" : "text-card-foreground"
+                          }`}
+                          style={{
+                            animation: isActive ? "strokeReveal 0.35s ease-out forwards" : undefined,
+                            clipPath: spoken && !isActive ? "inset(0 0 0 0)" : undefined,
+                          }}
+                        >
+                          {wordObj.word}
+                        </span>
+                      )}
                       {wIndex < paragraph.words.length - 1 ? " " : ""}
                     </span>
                   )
@@ -150,6 +161,22 @@ export function VoiceoverLetterContent() {
               </p>
             ))}
           </div>
+
+          {/* Writing animation keyframes */}
+          <style
+            dangerouslySetInnerHTML={{
+              __html: `
+                @keyframes strokeReveal {
+                  0% {
+                    clip-path: inset(0 100% 0 0);
+                  }
+                  100% {
+                    clip-path: inset(0 0 0 0);
+                  }
+                }
+              `,
+            }}
+          />
 
           <div className="mt-10 flex justify-center">
             <svg

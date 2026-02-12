@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
-import "./globals.css";
+import { Dancing_Script, Cormorant_Garamond, Inter } from "next/font/google";
+
+const dancingScript = Dancing_Script({
+  variable: "--font-cursive",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -26,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${cormorant.variable} ${inter.variable} antialiased`}
+        className={`${dancingScript.variable} ${cormorant.variable} ${inter.variable} antialiased`}
       >
         {children}
       </body>
