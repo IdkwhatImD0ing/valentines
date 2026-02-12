@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect, useCallback } from "react"
+import { createPortal } from "react-dom"
 import { Play, Pause, RotateCcw } from "lucide-react"
 import { transcript, totalDuration, type TranscriptParagraph } from "@/lib/transcript"
 
@@ -118,11 +119,11 @@ export function VoiceoverLetterContent() {
             }}
           />
 
-          <div className="relative text-xl md:text-2xl leading-relaxed space-y-6" style={{ fontFamily: "var(--font-cursive)" }}>
+          <div className="relative text-base md:text-lg leading-relaxed space-y-5" style={{ fontFamily: "var(--font-cursive)" }}>
             {transcript.map((paragraph, pIndex) => (
               <p
                 key={pIndex}
-                className={`text-balance ${pIndex === 0 ? "text-3xl md:text-4xl font-semibold" : ""}`}
+                className={`text-balance ${pIndex === 0 ? "text-xl md:text-2xl font-semibold" : ""}`}
               >
                 {paragraph.words.map((wordObj, wIndex) => {
                   const spoken = isWordSpoken(transcript, pIndex, wIndex, currentTime)
@@ -196,10 +197,12 @@ export function VoiceoverLetterContent() {
         </p>
       </div>
 
-      {/* Floating fixed playback bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-[100]">
-        <div className="bg-card/95 backdrop-blur-md border-t border-border shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
-          <div className="max-w-2xl mx-auto px-6 py-4 flex items-center gap-4">
+      {/* Floating fixed playback bar - rendered via portal to avoid scroll container issues */}
+      {typeof document !== "undefined" &&
+        createPortal(
+          <div className="fixed bottom-0 left-0 right-0" style={{ zIndex: 9999 }}>
+            <div className="bg-card/95 backdrop-blur-md border-t border-border shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+              <div className="max-w-2xl mx-auto px-6 py-4 flex items-center gap-4">
             {/* Play / Pause / Replay */}
             <button
               type="button"
@@ -236,9 +239,11 @@ export function VoiceoverLetterContent() {
                 <span>{formatTime(totalDuration)}</span>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
+              </div>
+            </div>
+          </div>,
+          document.body
+        )}
     </>
   )
 }
