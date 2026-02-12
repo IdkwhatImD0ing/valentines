@@ -132,19 +132,21 @@ export function VoiceoverLetterContent() {
                     activeWord.paragraphIndex === pIndex &&
                     activeWord.wordIndex === wIndex
 
+                  const spacer = wIndex < paragraph.words.length - 1 ? " " : ""
+
                   return (
                     <span
                       key={wIndex}
-                      className="relative inline-block"
+                      className="relative inline"
                     >
-                      {/* Ghost text for layout - always present but invisible */}
+                      {/* Ghost text for layout - always present but faded */}
                       <span className="text-card-foreground/20">
-                        {wordObj.word}
+                        {wordObj.word}{spacer}
                       </span>
                       {/* Revealed text with writing animation */}
                       {spoken && (
                         <span
-                          className={`absolute inset-0 ${
+                          className={`absolute left-0 top-0 ${
                             isActive ? "text-[#C0616E]" : "text-card-foreground"
                           }`}
                           style={{
@@ -152,10 +154,9 @@ export function VoiceoverLetterContent() {
                             clipPath: spoken && !isActive ? "inset(0 0 0 0)" : undefined,
                           }}
                         >
-                          {wordObj.word}
+                          {wordObj.word}{spacer}
                         </span>
                       )}
-                      {wIndex < paragraph.words.length - 1 ? " " : ""}
                     </span>
                   )
                 })}
